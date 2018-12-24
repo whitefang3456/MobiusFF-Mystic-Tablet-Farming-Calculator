@@ -238,11 +238,11 @@
 </body>
 <script type="text/javascript">
 
-function bsearch(fn, target) {
-    var l = 0, r = 1024;
+function bsearch_core(fn, target, tabletsOwned) {
+    var l = 0, r = 512;
     while (l < r) {
         var mid = Math.floor((l + r) / 2);
-        if (fn(mid) < target) {
+        if (fn(mid, tabletsOwned) < target) {
             l = mid + 1;
         } else {
             r = mid;
@@ -251,16 +251,18 @@ function bsearch(fn, target) {
     return l;
 }
 
-function coresPerDay(d) {
-    var tablets = d + 3*Math.floor(d/6);
+function coresPerDay(d, tabletsOwned) {
+    var tablets = tabletsOwned + d + 3*Math.floor(d/6);
+    var tabletsLeftOver = tablets % 3;
     var gilPass = d;
-    return Math.floor(tablets / 3) * 40 + gilPass * 22;
+    return (tablets - tabletsLeftOver) / 3 * 40 + gilPass * 22 + (tabletsLeftOver == 1 ? 10 : tabletsLeftOver * 11);
 }
 
-function coresPerDayWeeklyTablets(d) {
-    var tablets = d + 3*Math.floor(d/6) + 3*Math.floor(d/7);
+function coresPerDayWeeklyTablets(d, tabletsOwned) {
+    var tablets = tabletsOwned + d + 3*Math.floor(d/6) + 3*Math.floor(d/7);
+    var tabletsLeftOver = tablets % 3;
     var gilPass = d;
-    return Math.floor(tablets / 3) * 40 + gilPass * 22;
+    return (tablets - tabletsLeftOver) / 3 * 40 + gilPass * 22 + (tabletsLeftOver == 1 ? 10 : tabletsLeftOver * 11);
 }
 
 var app = angular.module('mtabletCalc', [])
@@ -289,24 +291,44 @@ var app = angular.module('mtabletCalc', [])
         }
         //Functions of remaining tablets
         $scope.calculateRemainingTabletsRegular = function() {
-            return 3 * (Math.round(rCores / 40));
+            var tablets = 3 * Math.floor(rCores / 40);
+            var coresNeeded = rCores % 40;
+            var corrections = 0;
+            if (coresNeeded >= 23) {
+                corrections = 3;
+            } else if (coresNeeded >= 11) {
+                corrections = 2;
+            } else if (coresNeeded >= 1) {
+                corrections = 1;
+            }
+            return tablets + corrections;
         }
         $scope.calculateRemainingTabletsSupreme = function() {
-            return 3 * (Math.round(sCores / 40));
+            var tablets = 3 * Math.floor(sCores / 40);
+            var coresNeeded = sCores % 40;
+            var corrections = 0;
+            if (coresNeeded >= 23) {
+                corrections = 3;
+            } else if (coresNeeded >= 11) {
+                corrections = 2;
+            } else if (coresNeeded >= 1) {
+                corrections = 1;
+            }
+            return tablets + corrections;
         }
         //Functions of remaining days
         $scope.calculateRemainingDaysRegular = function() {
-            return bsearch(coresPerDay, rCores);
+            return bsearch_core(coresPerDay, rCores, $scope.dv_tablets_txt % 3);
         }
         $scope.calculateRemainingDaysSupreme = function() {
-            return bsearch(coresPerDay, sCores);
+            return bsearch_core(coresPerDay, sCores, $scope.dv_tablets_txt % 3);
         }
         //Functions of remaining days including tablets
         $scope.calculateRemainingDaysRegular_weeklytabs = function() {
-            return bsearch(coresPerDayWeeklyTablets, rCores);
+            return bsearch_core(coresPerDayWeeklyTablets, rCores, $scope.dv_tablets_txt % 3);
         }
         $scope.calculateRemainingDaysSupreme_weeklytabs = function() {
-            return bsearch(coresPerDayWeeklyTablets, sCores);
+            return bsearch_core(coresPerDayWeeklyTablets, sCores, $scope.dv_tablets_txt % 3);
         }
     }]);
 </script>
