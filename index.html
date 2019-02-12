@@ -50,7 +50,6 @@
     background-color: #9d8218 !important;
     color:#fff !important;
 }
-
 .info_box {
     background: #e1e1e1;
     padding: 16px 24px;
@@ -92,13 +91,17 @@
     vertical-align: middle;
     float: none;
 }
+
+.magicite_icon {
+max-width: 28px;    
+}
 </style>
 
 <body ng-app="mtabletCalc" ng-controller="translateCtrl">
     <div class="container" ng-controller="CoreCalcCtrl">
         <div class="row header_bar">
             <div class="col-xs-12 col-sm-8">
-                <h4 class="title_heading" translate="TITLE">MobiusFF DV Farming Calculator (BETA)</h4>
+                <h4 class="title_heading" translate="TITLE">MobiusFF Rift Farming Calculator (BETA)</h4>
             </div>
             <div class="col-xs-12 col-sm-4 text-right" id="translate_box">
                 <a href="javascript:void(0)" name="translate_en" ng-click="changeLanguage('en')" class="btn btn-primary" ng-model="translate_en" ng-class="{'btn_active_en':language_used =='en'}" translate="BTN_EN">ENG</a>
@@ -111,10 +114,10 @@
         <div ng-show="show_info" class="info_box">
             <h4 translate="INFO_TITLE">What this tool does?</h4>
             <ul>
-                <li translate="INFO_DESCRIPTION_1">This app helps to calculate <i>approximate number of days</i> needed to farm ability/supreme cards from coming content of Dimensional Valley, according to resources you possess and inputs.</li>
-                <li translate="INFO_DESCRIPTION_2"><b>5700</b> cores can be obtained by clearing all challenge nodes in the DV. No tablet is required to access those nodes</li>
+                <li translate="INFO_DESCRIPTION_1">This app helps to calculate <i>approximate number of days</i> needed to farm ability/supreme cards from The Rift region, according to resources you possess and inputs.</li>
+                <li translate="INFO_DESCRIPTION_2"><b>5700</b> cores can be obtained by clearing all challenge nodes in The Rift. No tablet is required to access those nodes</li>
                 <li translate="INFO_DESCRIPTION_3"><b>7500 cores</b> will be required to unlock 5-star regular Extreme (極) Sicarius card.</li>
-                <li translate="INFO_DESCRIPTION_4"><b>20,000 cores</b> will be required to unlock 5-star Ultimate/Supreme True (真・極) Sicarius card</li>
+                <li translate="INFO_DESCRIPTION_4"><b>20,000 cores</b> will be required to unlock 5-star Ultimate/Supreme Extreme <b>X</b> (真・極) Sicarius card</li>
             </ul>
             <p translate="INFO_NOTE">Untick the checkbox to hide this</p>
         </div>
@@ -195,7 +198,7 @@
                     <thead>
                         <th translate="CARD_LABEL">Card-to-get</th>
                         <th translate="REGULAR_5_STAR">Regular 5&#x2605; Extreme Sic Card</th>
-                        <th id="supreme" translate="SUPREME_5_STAR">Supreme 5&#x2605; True Sic Card</th>
+                        <th id="supreme" translate="SUPREME_5_STAR">Supreme 5&#x2605; Extreme X Sic Card</th>
                     </thead>
                     <tbody>
                         <tr>
@@ -246,6 +249,19 @@
                                 <h4 ng-show="calculateRemainingDaysSupreme_weeklytabs() <= 0">0</h4>
                             </td>
                         </tr>
+                        <tr>
+                            <td><b>Magicite Needed for Remaining Tablets</b></td>
+                            <td>
+                                <h4>
+                                   900 <img class="magicite_icon" src="img/magicite.png"> 
+                                </h4>
+                            </td>
+                            <td>
+                                <h4>
+                                    900 <img class="magicite_icon" src="img/magicite.png"> 
+                                </h4>
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -262,13 +278,13 @@
 var translationEN = {
         BTN_EN:'ENG',
         BTN_JP:'日語',
-        TITLE: 'MobiusFF DV Farming Calculator (BETA)',
+        TITLE: 'MobiusFF The Rift Farming Calculator (BETA)',
         INFO_CHECKBOX:'For more info, please kindly click the checkbox',
         INFO_TITLE:'What this tool does?',
-        INFO_DESCRIPTION_1:'This app helps to calculate <u>approximate number of days</u> needed to farm ability/supreme cards from coming content of Dimensional Valley, according to resources you possess and inputs.',
-        INFO_DESCRIPTION_2:'<b>5,700 cores</b> can be obtained by clearing all challenge nodes in the DV. No tablet is required to access those nodes',
+        INFO_DESCRIPTION_1:'This app helps to calculate <u>approximate number of days</u> needed to farm ability/supreme cards from The Rift region, according to resources you possess and inputs.',
+        INFO_DESCRIPTION_2:'<b>5,700 cores</b> can be obtained by clearing all challenge nodes in The Rift. No tablet is required to access those nodes',
         INFO_DESCRIPTION_3:'<b>7,500 cores</b> will be required to unlock 5-star regular Extreme (極) Sicarius card',
-        INFO_DESCRIPTION_4:'<b>20,000 cores</b> will be required to unlock 5-star Ultimate/Supreme True (真・極) Sicarius card',
+        INFO_DESCRIPTION_4:'<b>20,000 cores</b> will be required to unlock 5-star Ultimate/Supreme Extreme <b>X</b> (真・極) Sicarius card',
         INFO_NOTE:'To close this, please kindly untick the checkbox',
         PRE_TEXT:'Before we begin, please kindly insert the inputs according to 1 kind of Extreme Sic',
         CORE_NUMBER_LABEL: 'Number of cores farmed',
@@ -279,7 +295,7 @@ var translationEN = {
         CORE_QUANTITY_LABEL: 'cores',
         ANALYSIS_LABEL:'Analysis',
         REGULAR_5_STAR:'Regular 5 ★ Extreme Sic Card',
-        SUPREME_5_STAR:'Supreme 5 ★ True Sic Card',
+        SUPREME_5_STAR:'Supreme 5 ★ Extreme X Sic Card',
         CARD_LABEL:'Card-to-get',
         REMAINING_CORE:'Remaining cores needed',
         REMAINING_TABLET:'Remaining tablets needed',
