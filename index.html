@@ -2,14 +2,14 @@
 <html>
 
 <head>
-    <title>MFF DV Farming Calculator (BETA)</title>
+    <title>MFF The Rift Farming Calculator (BETA) / メビウスFF石板計算機 </title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.6.7/angular.min.js"></script>
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="theme-color" content="#000000">
     <meta charset="UTF-8">
-    <meta name="description" content="Mobius Final Fantasy Mystic Tablet Calculator / メビウスFF石板計算機">
+    <meta name="description" content="Mobius Final Fantasy The Rift Farming Calculator / メビウスFF石板計算機">
     <meta name="keywords" content="MobiusFF, Final Fantasy, メビウスFF, 石板計算機">
     <meta name="author" content="wfang3456">
 </head>
@@ -76,14 +76,17 @@
 #supreme {
     background: red;
     /* For browsers that do not support gradients */
-    background: -webkit-linear-gradient(left, orange, yellow, green, cyan, blue, violet);
+    background: -webkit-linear-gradient(left, orange, #fcfc30, #6fff6f, cyan, #4242f4, #e35de3);
     /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(right, orange, yellow, green, cyan, blue, violet);
+    background: -o-linear-gradient(right, orange, #fcfc30, #6fff6f, cyan, #4242f4, #e35de3);
     /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(right, orange, yellow, green, cyan, blue, violet);
+    background: -moz-linear-gradient(right, orange, #fcfc30, #6fff6f, cyan, #4242f4, #e35de3);
     /* For Firefox 3.6 to 15 */
-    background: linear-gradient(to right, orange, yellow, green, cyan, blue, violet);
+    background: linear-gradient(to right, orange, #fcfc30, #6fff6f, cyan, #4242f4, #e35de3);
     /* Standard syntax (must be last) */
+    text-shadow:1px 1px 3px #fff;
+
+
 }
 
 .vcenter {
@@ -94,6 +97,20 @@
 
 .magicite_icon {
 max-width: 28px;    
+}
+.gl_tag{
+    padding: 6px 8px;
+    background: blue;
+    color: white;
+    border-radius: 12px;
+    margin-right:8px;
+}
+.jp_tag{
+    padding: 6px 8px;
+    background: red;
+    color: white;
+    border-radius: 12px;
+     margin-right:8px;
 }
 </style>
 
@@ -250,16 +267,42 @@ max-width: 28px;
                             </td>
                         </tr>
                         <tr>
-                            <td><b>Magicite Needed for Remaining Tablets</b></td>
+                            <td><span class="gl_tag" translate="GL_TAG">GL</span><b translate="REMAINING_MAGICITE_MODE_GL_NORMAL">Estimated Magicite Needed - Normal (12 tablets : 1000 magicites) </b></td>
                             <td>
-                                <h4>
-                                   900 <img class="magicite_icon" src="img/magicite.png"> 
-                                </h4>
+                                <p>
+                                   {{calculateMagiciteRegular_GL()}}<img class="magicite_icon" src="img/magicite.png"> 
+                                </p>
                             </td>
                             <td>
-                                <h4>
-                                    900 <img class="magicite_icon" src="img/magicite.png"> 
-                                </h4>
+                                <p>
+                                    {{calculateMagiciteSupreme_GL()}} <img class="magicite_icon" src="img/magicite.png"> 
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="jp_tag" translate="JP_TAG">JP</span><b translate="REMAINING_MAGICITE_MODE_JP_NORMAL">Estimated Magicite Needed - Normal (9 tablets : 1000 magicites) </b></td>
+                            <td>
+                                <p>
+                                   {{calculateMagiciteRegular_JP()}}<img class="magicite_icon" src="img/magicite.png"> 
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    {{calculateMagiciteSupreme_JP()}} <img class="magicite_icon" src="img/magicite.png"> 
+                                </p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><span class="jp_tag" translate="JP_TAG">JP</span><b translate="REMAINING_MAGICITE_MODE_JP_SHOPSALE">Estimated Magicite Needed - Shop Sale (50 tablets : 4000 magicites) </b></td>
+                            <td>
+                                <p>
+                                   {{calculateMagiciteRegular_JP_shopsale()}}<img class="magicite_icon" src="img/magicite.png"> 
+                                </p>
+                            </td>
+                            <td>
+                                <p>
+                                    {{calculateMagiciteSupreme_JP_shopsale()}} <img class="magicite_icon" src="img/magicite.png"> 
+                                </p>
                             </td>
                         </tr>
                     </tbody>
@@ -301,13 +344,18 @@ var translationEN = {
         REMAINING_TABLET:'Remaining tablets needed',
         ESTIMATED_DAYS:'Estimated Number of Days to Obtain Card (included daily pass)',
         ESTIMATED_DAYS_WEEKLY_GIL:'Estimated Number of Days to Obtain Card (included weekly gil tablets x3)',
+        GL_TAG:'GL',
+        JP_TAG:'JP',
+        REMAINING_MAGICITE_MODE_GL_NORMAL:'Estimated Magicite Needed - Normal (12 tablets : 1000 magicites)',
+        REMAINING_MAGICITE_MODE_JP_NORMAL:'Estimated Magicite Needed - Normal (9 tablets : 1000 magicites)',
+        REMAINING_MAGICITE_MODE_JP_SHOPSALE:'Estimated Magicite Needed - Shop Sale (50 tablets : 4000 magicites)',
         DAY_UNIT:'days',
         DISCLAIMER_TXT:'Disclaimer: This calculator will only provide us an approximate/estimation value of results to be closest as possible. Please take this app as a grain of salts.',
         CREDIT_TEXT:'Built with love by {{owner}} and helpful contributors from {{reddit}}.'
     };
 var translationJP = {
         BTN_EN:'英語',
-        BTN_JP:'日語',
+        BTN_JP:'日本語',
         TITLE: 'メビウスFF石板計算機(ベータ)',
         INFO_CHECKBOX:'詳細については、チェックボックスをクリックしてください',
         INFO_TITLE:'このツールは何をしていますか？',
@@ -331,6 +379,11 @@ var translationJP = {
         REMAINING_TABLET:'残りの石板',
         ESTIMATED_DAYS:'推定カード取得日数(毎日パスき含む)',
         ESTIMATED_DAYS_WEEKLY_GIL:'推定カード取得日数 (週刊ギル3枚石板を含む)',
+        GL_TAG:'海外',
+        JP_TAG:'日本',
+        REMAINING_MAGICITE_MODE_GL_NORMAL:'合計魔石数 (12枚石板 : 1000魔石)',
+        REMAINING_MAGICITE_MODE_JP_NORMAL:'合計魔石数 (9枚石板 : 1000魔石)',
+        REMAINING_MAGICITE_MODE_JP_SHOPSALE:'合計魔石数 (50枚石板 : 4000魔石)',
         DAY_UNIT:'日',
         DISCLAIMER_TXT:'免責事項：この計算機は、可能な限り近い結果の概算値または推定値を提供します。',
         CREDIT_TEXT:'これは {{owner}} と他の{{reddit}}の貢献者による情熱をもって開発されました。'
@@ -417,7 +470,50 @@ app.controller('CoreCalcCtrl', ['$scope', function($scope) {
         $scope.calculateRemainingDaysSupreme_weeklytabs = function() {
             return bsearch_core(coresPerDayWeeklyTablets, sCores, $scope.dv_tablets_txt % 3);
         }
+        // GL & JP Magicite calculation - Regular Normal
+        $scope.calculateMagiciteRegular_GL = function() {
+           return calc_magicite_tablet_GL_normal($scope.calculateRemainingTabletsRegular());
+        }
+        $scope.calculateMagiciteRegular_JP = function() {
+           return calc_magicite_tablet_JP_normal($scope.calculateRemainingTabletsRegular());
+        }
+         // GL & JP Magicite calculation - Supreme Normal
+        $scope.calculateMagiciteSupreme_GL = function() {
+           return calc_magicite_tablet_GL_normal($scope.calculateRemainingTabletsSupreme());
+        }
+          $scope.calculateMagiciteSupreme_JP = function() {
+           return calc_magicite_tablet_JP_normal($scope.calculateRemainingTabletsSupreme());
+        }
+        //JP Magicite calculation shop sale (JP Only)
+        $scope.calculateMagiciteRegular_JP_shopsale = function() {
+           return calc_magicite_tablet_JP_shopsale($scope.calculateRemainingTabletsRegular());
+        }
+        $scope.calculateMagiciteSupreme_JP_shopsale = function() {
+           return calc_magicite_tablet_JP_shopsale($scope.calculateRemainingTabletsSupreme());
+        }
     }]);
+
+function calc_magicite_tablet_GL_normal(remainingTablets){
+    // get Number of Batches for 12 tablets per 1000 mags
+    var numberPerBatch = Math.floor(remainingTablets / 12);
+    var remainderTablets = Math.floor(remainingTablets % 12);
+    return (1000 * numberPerBatch) + (Math.floor(remainderTablets /3) * 300);
+}
+
+function calc_magicite_tablet_JP_normal(remainingTablets){
+    // get Number of Batches for 9 tablets per 1000 mags
+    var numberPerBatch = Math.floor(remainingTablets / 9);
+    var remainderTablets = Math.floor(remainingTablets % 9);
+    return (1000 * numberPerBatch) + (remainderTablets * 1000);
+}
+
+function calc_magicite_tablet_JP_shopsale(remainingTablets){
+    // get Number of Batches for 50 tablets per 4000 mags
+    var numberPerBatch = Math.floor(remainingTablets / 50);
+    var remainderTablets = Math.floor(remainingTablets % 50);
+    return (4000 * numberPerBatch) + (Math.floor(remainderTablets/9)  * 800);
+}
+
 
 
 function bsearch_core(fn, target, tabletsOwned) {
