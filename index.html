@@ -267,6 +267,19 @@ max-width: 28px;
                             </td>
                         </tr>
                         <tr>
+                            <td><span class="jp_tag" translate="JP_TAG">GL</span><b translate="ESTIMATED_DAYS_PASS_SALE">Estimated Number of Days to Obtain Card (included monthly pass sale x3)</b></td>
+                            <td>
+                                <h4 ng-show="calculateRemainingDaysRegular_weeklytabs() > 0">
+                                    {{calculateRemainingDaysRegular_weeklytabs()}}&nbsp;<span translate="DAY_UNIT">days</span></h4>
+                                <h4 ng-show="calculateRemainingDaysRegular_weeklytabs() <= 0">0</h4>
+                            </td>
+                            <td>
+                                <h4 ng-show="calculateRemainingDaysSupreme_weeklytabs() > 0">
+                                    {{calculateRemainingDaysSupreme_weeklytabs()}}&nbsp;<span translate="DAY_UNIT">days</span></h4>
+                                <h4 ng-show="calculateRemainingDaysSupreme_weeklytabs() <= 0">0</h4>
+                            </td>
+                        </tr>
+                        <tr>
                             <td><span class="gl_tag" translate="GL_TAG">GL</span><b translate="REMAINING_MAGICITE_MODE_GL_NORMAL">Estimated Magicite Needed - Normal (12 tablets : 1000 magicites) </b></td>
                             <td>
                                 <p>
@@ -309,6 +322,7 @@ max-width: 28px;
                 </table>
             </div>
             <div class="col-sm-12">
+                <p><sup>Assumption: Pass Shop Sale is assumed for 8 days monthly (daily 3 passes);</sup></p>
                 <p><i translate="DISCLAIMER_TXT">Disclaimer:This calculator will only provide us an approximate/estimation value of results to be closest as possible. Please take this app as a grain of salts.</i>
                     <b translate="CREDIT_TEXT" translate-values="options">Built with love by <a href="https://www.reddit.com/u/wf3456">/u/wf3456</a> and helpful contributors from Reddit</b></p>
             </div>
@@ -320,7 +334,7 @@ max-width: 28px;
 <script type="text/javascript">
 var translationEN = {
         BTN_EN:'ENG',
-        BTN_JP:'日語',
+        BTN_JP:'日本語',
         TITLE: 'MobiusFF The Rift Farming Calculator (BETA)',
         INFO_CHECKBOX:'For more info, please kindly click the checkbox',
         INFO_TITLE:'What this tool does?',
@@ -344,12 +358,14 @@ var translationEN = {
         REMAINING_TABLET:'Remaining tablets needed',
         ESTIMATED_DAYS:'Estimated Number of Days to Obtain Card (included daily pass)',
         ESTIMATED_DAYS_WEEKLY_GIL:'Estimated Number of Days to Obtain Card (included weekly gil tablets x3)',
+        ESTIMATED_DAYS_PASS_SALE:'Estimated Number of Days to Obtain Card (included monthly pass sale x3)',
         GL_TAG:'GL',
         JP_TAG:'JP',
         REMAINING_MAGICITE_MODE_GL_NORMAL:'Estimated Magicite Needed - Normal (12 tablets : 1000 magicites)',
         REMAINING_MAGICITE_MODE_JP_NORMAL:'Estimated Magicite Needed - Normal (9 tablets : 1000 magicites)',
         REMAINING_MAGICITE_MODE_JP_SHOPSALE:'Estimated Magicite Needed - Shop Sale (50 tablets : 4000 magicites)',
         DAY_UNIT:'days',
+        ASSUMPTION_TXT:'Assumption: Pass Shop Sale is assumed for 8 days monthly (daily 3 passes);',
         DISCLAIMER_TXT:'Disclaimer: This calculator will only provide us an approximate/estimation value of results to be closest as possible. Please take this app as a grain of salts.',
         CREDIT_TEXT:'Built with love by {{owner}} and helpful contributors from {{reddit}}.'
     };
@@ -379,12 +395,14 @@ var translationJP = {
         REMAINING_TABLET:'残りの石板',
         ESTIMATED_DAYS:'推定カード取得日数(毎日パスき含む)',
         ESTIMATED_DAYS_WEEKLY_GIL:'推定カード取得日数 (週刊ギル3枚石板を含む)',
+        ESTIMATED_DAYS_PASS_SALE:'推定カード取得日数 (月額パスセール3枚を含む)',
         GL_TAG:'海外',
         JP_TAG:'日本',
         REMAINING_MAGICITE_MODE_GL_NORMAL:'合計魔石数 (12枚石板 : 1000魔石)',
         REMAINING_MAGICITE_MODE_JP_NORMAL:'合計魔石数 (9枚石板 : 1000魔石)',
         REMAINING_MAGICITE_MODE_JP_SHOPSALE:'合計魔石数 (50枚石板 : 4000魔石)',
         DAY_UNIT:'日',
+        ASSUMPTION_TXT:'推定: パスセールは8日間毎月推定(毎日3枚);',
         DISCLAIMER_TXT:'免責事項：この計算機は、可能な限り近い結果の概算値または推定値を提供します。',
         CREDIT_TEXT:'これは {{owner}} と他の{{reddit}}の貢献者による情熱をもって開発されました。'
     };
