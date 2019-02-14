@@ -270,12 +270,12 @@ max-width: 28px;
                             <td><span class="jp_tag" translate="JP_TAG">GL</span><b translate="ESTIMATED_DAYS_PASS_SALE">Estimated Number of Days to Obtain Card (included monthly pass sale x3)</b></td>
                             <td>
                                 <h4 ng-show="calculateRemainingDaysRegular_weeklytabs() > 0">
-                                    {{calculateRemainingDaysRegular_weeklytabs()}}&nbsp;<span translate="DAY_UNIT">days</span></h4>
+                                    {{calculateRemainingDaysRegular_weeklytabs_shopsale()}}&nbsp;<span translate="DAY_UNIT">days</span></h4>
                                 <h4 ng-show="calculateRemainingDaysRegular_weeklytabs() <= 0">0</h4>
                             </td>
                             <td>
                                 <h4 ng-show="calculateRemainingDaysSupreme_weeklytabs() > 0">
-                                    {{calculateRemainingDaysSupreme_weeklytabs()}}&nbsp;<span translate="DAY_UNIT">days</span></h4>
+                                    {{calculateRemainingDaysSupreme_weeklytabs_shopsale()}}&nbsp;<span translate="DAY_UNIT">days</span></h4>
                                 <h4 ng-show="calculateRemainingDaysSupreme_weeklytabs() <= 0">0</h4>
                             </td>
                         </tr>
@@ -488,6 +488,13 @@ app.controller('CoreCalcCtrl', ['$scope', function($scope) {
         $scope.calculateRemainingDaysSupreme_weeklytabs = function() {
             return bsearch_core(coresPerDayWeeklyTablets, sCores, $scope.dv_tablets_txt % 3);
         }
+        //Functions of remaining days including tablets + shopsale gil pass
+        $scope.calculateRemainingDaysRegular_weeklytabs_shopsale = function() {
+            return bsearch_core(coresPerDayWeeklyTabletsJP, rCores, $scope.dv_tablets_txt % 3);
+        }
+        $scope.calculateRemainingDaysSupreme_weeklytabs_shopsale = function() {
+            return bsearch_core(coresPerDayWeeklyTabletsJP, sCores, $scope.dv_tablets_txt % 3);
+        }
         // GL & JP Magicite calculation - Regular Normal
         $scope.calculateMagiciteRegular_GL = function() {
            return calc_magicite_tablet_GL_normal($scope.calculateRemainingTabletsRegular());
@@ -547,6 +554,43 @@ function bsearch_core(fn, target, tabletsOwned) {
     return l;
 }
 
+// global var 
+var shopsaleGilPass = [0];
+var currentday = 0;
+(function initglobalvar() {
+    var dayInMonth = [31,28,31,30,31,30,31,31,30,31,30,31]
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth(); //January is 0!
+    var yyyy = today.getFullYear();
+
+    // check leap year
+    if (((yyyy % 4 == 0) && (yyyy % 100 != 0)) || (yyyy % 400 == 0)) {
+        dayInMonth[1] = 29;
+    }
+
+    var acc = 0;
+    for (var m = 0; m < 12; m++) {
+        for (var d = 0; d < dayInMonth[m]; d++) {
+            if (d >= dayInMonth[m] - 8) {
+                acc += 2;
+            }        
+            shopsaleGilPass.push(acc);
+        }
+    }
+
+    currentday = dd;
+    for (var i = 0; i < mm; i++) {
+        currentday += dayInMonth[i];
+    }
+})();
+
+function gilpassFromShopsale(d) {
+    var len = shopsaleGilPass.length;
+    return shopsaleGilPass[(currentday + d) % len] - shopsaleGilPass[currentday] + 
+        (currentday + d >= len ? shopsaleGilPass[len-1] : 0);
+}
+
 function coresPerDay(d, tabletsOwned) {
     var tablets = tabletsOwned + d + 3*Math.floor(d/6);
     var tabletsLeftOver = tablets % 3;
@@ -558,6 +602,13 @@ function coresPerDayWeeklyTablets(d, tabletsOwned) {
     var tablets = tabletsOwned + d + 3*Math.floor(d/6) + 3*Math.floor(d/7);
     var tabletsLeftOver = tablets % 3;
     var gilPass = d;
+    return (tablets - tabletsLeftOver) / 3 * 40 + gilPass * 22 + (tabletsLeftOver == 1 ? 10 : tabletsLeftOver * 11);
+}
+
+function coresPerDayWeeklyTabletsJP(d, tabletsOwned) {
+    var tablets = tabletsOwned + d + 3*Math.floor(d/6) + 3*Math.floor(d/7);
+    var tabletsLeftOver = tablets % 3;
+    var gilPass = d + gilpassFromShopsale(d);
     return (tablets - tabletsLeftOver) / 3 * 40 + gilPass * 22 + (tabletsLeftOver == 1 ? 10 : tabletsLeftOver * 11);
 }
 
