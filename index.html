@@ -96,7 +96,7 @@
 }
 
 .magicite_icon {
-max-width: 28px;    
+max-width: 20px;    
 }
 .gl_tag{
     padding: 6px 8px;
@@ -111,6 +111,10 @@ max-width: 28px;
     color: white;
     border-radius: 12px;
      margin-right:8px;
+}
+table > tbody > tr > td > h4 {
+margin: 0;
+font-size:12pt;
 }
 </style>
 
@@ -267,7 +271,7 @@ max-width: 28px;
                             </td>
                         </tr>
                         <tr>
-                            <td><span class="jp_tag" translate="JP_TAG">GL</span><b translate="ESTIMATED_DAYS_PASS_SALE">Estimated Number of Days to Obtain Card (included monthly pass sale x3)</b></td>
+                            <td><span class="jp_tag" translate="JP_TAG">GL</span><b translate="ESTIMATED_DAYS_PASS_SALE">Estimated Number of Days to Obtain Card (included monthly pass sale)</b></td>
                             <td>
                                 <h4 ng-show="calculateRemainingDaysRegular_weeklytabs() > 0">
                                     {{calculateRemainingDaysRegular_weeklytabs_shopsale()}}&nbsp;<span translate="DAY_UNIT">days</span></h4>
@@ -282,47 +286,53 @@ max-width: 28px;
                         <tr>
                             <td><span class="gl_tag" translate="GL_TAG">GL</span><b translate="REMAINING_MAGICITE_MODE_GL_NORMAL">Estimated Magicite Needed - Normal (12 tablets : 1000 magicites) </b></td>
                             <td>
-                                <p>
+                                <p ng-show="calculateMagiciteRegular_GL() >0">
                                    {{calculateMagiciteRegular_GL()}}<img class="magicite_icon" src="img/magicite.png"> 
                                 </p>
+                                <p ng-show="calculateMagiciteRegular_GL() <= 0">0</p>
                             </td>
                             <td>
-                                <p>
+                                <p ng-show="calculateMagiciteSupreme_GL() >0">
                                     {{calculateMagiciteSupreme_GL()}} <img class="magicite_icon" src="img/magicite.png"> 
                                 </p>
+                                <p ng-show="calculateMagiciteSupreme_GL() <= 0">0</p>
                             </td>
                         </tr>
                         <tr>
                             <td><span class="jp_tag" translate="JP_TAG">JP</span><b translate="REMAINING_MAGICITE_MODE_JP_NORMAL">Estimated Magicite Needed - Normal (9 tablets : 1000 magicites) </b></td>
                             <td>
-                                <p>
+                                <p ng-show="calculateMagiciteRegular_JP() >0">
                                    {{calculateMagiciteRegular_JP()}}<img class="magicite_icon" src="img/magicite.png"> 
                                 </p>
+                                <p ng-show="calculateMagiciteRegular_JP() <= 0">0</p>
                             </td>
                             <td>
-                                <p>
-                                    {{calculateMagiciteSupreme_JP()}} <img class="magicite_icon" src="img/magicite.png"> 
+                                <p ng-show="calculateMagiciteSupreme_JP() >0">
+                                 {{calculateMagiciteSupreme_JP()}} <img class="magicite_icon" src="img/magicite.png"> 
                                 </p>
+                                <p ng-show="calculateMagiciteSupreme_JP() <= 0">0</p>
                             </td>
                         </tr>
                         <tr>
-                            <td><span class="jp_tag" translate="JP_TAG">JP</span><b translate="REMAINING_MAGICITE_MODE_JP_SHOPSALE">Estimated Magicite Needed - Shop Sale (50 tablets : 4000 magicites) </b></td>
+                            <td><span class="jp_tag" translate="JP_TAG">JP</span><b translate="REMAINING_MAGICITE_MODE_JP_SHOPSALE">Estimated Magicite Needed - Shop Sale (50 tablets : 4000 magicites, 9 tablets : 800 magicites)</b></td>
                             <td>
-                                <p>
+                                <p ng-show="calculateMagiciteRegular_JP_shopsale() >0">
                                    {{calculateMagiciteRegular_JP_shopsale()}}<img class="magicite_icon" src="img/magicite.png"> 
                                 </p>
+                                <p ng-show="calculateMagiciteRegular_JP_shopsale() <= 0">0</p>
                             </td>
                             <td>
-                                <p>
+                                <p ng-show="calculateMagiciteSupreme_JP_shopsale() >0">
                                     {{calculateMagiciteSupreme_JP_shopsale()}} <img class="magicite_icon" src="img/magicite.png"> 
                                 </p>
+                                <p ng-show="calculateMagiciteSupreme_JP_shopsale() <= 0">0</p>
                             </td>
                         </tr>
                     </tbody>
                 </table>
             </div>
             <div class="col-sm-12">
-                <p><sup>Assumption: Pass Shop Sale is assumed for 8 days monthly (daily 3 passes);</sup></p>
+                <p><sup translate="ASSUMPTION_TXT">Assumption: Pass Shop Sale is assumed for 8 days monthly (daily 3 passes);</sup></p>
                 <p><i translate="DISCLAIMER_TXT">Disclaimer:This calculator will only provide us an approximate/estimation value of results to be closest as possible. Please take this app as a grain of salts.</i>
                     <b translate="CREDIT_TEXT" translate-values="options">Built with love by <a href="https://www.reddit.com/u/wf3456">/u/wf3456</a> and helpful contributors from Reddit</b></p>
             </div>
@@ -358,12 +368,12 @@ var translationEN = {
         REMAINING_TABLET:'Remaining tablets needed',
         ESTIMATED_DAYS:'Estimated Number of Days to Obtain Card (included daily pass)',
         ESTIMATED_DAYS_WEEKLY_GIL:'Estimated Number of Days to Obtain Card (included weekly gil tablets x3)',
-        ESTIMATED_DAYS_PASS_SALE:'Estimated Number of Days to Obtain Card (included monthly pass sale x3)',
+        ESTIMATED_DAYS_PASS_SALE:'Estimated Number of Days to Obtain Card (included monthly Pass Shop Sale)',
         GL_TAG:'GL',
         JP_TAG:'JP',
         REMAINING_MAGICITE_MODE_GL_NORMAL:'Estimated Magicite Needed - Normal (12 tablets : 1000 magicites)',
         REMAINING_MAGICITE_MODE_JP_NORMAL:'Estimated Magicite Needed - Normal (9 tablets : 1000 magicites)',
-        REMAINING_MAGICITE_MODE_JP_SHOPSALE:'Estimated Magicite Needed - Shop Sale (50 tablets : 4000 magicites)',
+        REMAINING_MAGICITE_MODE_JP_SHOPSALE:'Estimated Magicite Needed - Shop Sale (50 tablets : 4000 magicites, 9 tablets : 800 magicites)',
         DAY_UNIT:'days',
         ASSUMPTION_TXT:'Assumption: Pass Shop Sale is assumed for 8 days monthly (daily 3 passes);',
         DISCLAIMER_TXT:'Disclaimer: This calculator will only provide us an approximate/estimation value of results to be closest as possible. Please take this app as a grain of salts.',
@@ -395,12 +405,12 @@ var translationJP = {
         REMAINING_TABLET:'残りの石板',
         ESTIMATED_DAYS:'推定カード取得日数(毎日パスき含む)',
         ESTIMATED_DAYS_WEEKLY_GIL:'推定カード取得日数 (週刊ギル3枚石板を含む)',
-        ESTIMATED_DAYS_PASS_SALE:'推定カード取得日数 (月額パスセール3枚を含む)',
+        ESTIMATED_DAYS_PASS_SALE:'推定カード取得日数 (月額パスセールを含む)',
         GL_TAG:'海外',
         JP_TAG:'日本',
         REMAINING_MAGICITE_MODE_GL_NORMAL:'合計魔石数 (12枚石板 : 1000魔石)',
         REMAINING_MAGICITE_MODE_JP_NORMAL:'合計魔石数 (9枚石板 : 1000魔石)',
-        REMAINING_MAGICITE_MODE_JP_SHOPSALE:'合計魔石数 (50枚石板 : 4000魔石)',
+        REMAINING_MAGICITE_MODE_JP_SHOPSALE:'合計魔石数 (50枚石板 : 4000魔石, 9枚石板 : 800魔石)',
         DAY_UNIT:'日',
         ASSUMPTION_TXT:'推定: パスセールは8日間毎月推定(毎日3枚);',
         DISCLAIMER_TXT:'免責事項：この計算機は、可能な限り近い結果の概算値または推定値を提供します。',
@@ -509,6 +519,13 @@ app.controller('CoreCalcCtrl', ['$scope', function($scope) {
           $scope.calculateMagiciteSupreme_JP = function() {
            return calc_magicite_tablet_JP_normal($scope.calculateRemainingTabletsSupreme());
         }
+        //GL Magicite calculation shop sale
+        $scope.calculateMagiciteRegular_GL_shopsale = function() {
+           return calc_magicite_tablet_GL_shopsale($scope.calculateRemainingTabletsRegular());
+        }
+        $scope.calculateMagiciteSupreme_GL_shopsale = function() {
+           return calc_magicite_tablet_GL_shopsale($scope.calculateRemainingTabletsSupreme());
+        }
         //JP Magicite calculation shop sale (JP Only)
         $scope.calculateMagiciteRegular_JP_shopsale = function() {
            return calc_magicite_tablet_JP_shopsale($scope.calculateRemainingTabletsRegular());
@@ -519,24 +536,19 @@ app.controller('CoreCalcCtrl', ['$scope', function($scope) {
     }]);
 
 function calc_magicite_tablet_GL_normal(remainingTablets){
-    // get Number of Batches for 12 tablets per 1000 mags
-    var numberPerBatch = Math.floor(remainingTablets / 12);
-    var remainderTablets = Math.floor(remainingTablets % 12);
-    return (1000 * numberPerBatch) + (Math.floor(remainderTablets /3) * 300);
+    return Math.min((Math.ceil(remainingTablets/12)*1000, Math.floor(remainingTablets/12)*1000 + Math.ceil((remainingTablets%12)/3)*300));
 }
 
 function calc_magicite_tablet_JP_normal(remainingTablets){
-    // get Number of Batches for 9 tablets per 1000 mags
-    var numberPerBatch = Math.floor(remainingTablets / 9);
-    var remainderTablets = Math.floor(remainingTablets % 9);
-    return (1000 * numberPerBatch) + (remainderTablets * 1000);
+    return Math.ceil(remainingTablets/9) *1000;
 }
 
 function calc_magicite_tablet_JP_shopsale(remainingTablets){
-    // get Number of Batches for 50 tablets per 4000 mags
-    var numberPerBatch = Math.floor(remainingTablets / 50);
-    var remainderTablets = Math.floor(remainingTablets % 50);
-    return (4000 * numberPerBatch) + (Math.floor(remainderTablets/9)  * 800);
+    return Math.min((Math.ceil(remainingTablets/50) * 4000, Math.floor(remainingTablets/50) * 4000 + Math.ceil( (remainingTablets%50) / 9 ) * 800));
+}
+
+function calc_magicite_tablet_GL_shopsale(remainingTablets){
+    return Math.min((Math.ceil(remainingTablets/12)*800, Math.floor(remainingTablets/12)*800 + Math.ceil((remainingTablets%12)/3)*240));
 }
 
 
